@@ -5,6 +5,7 @@ import { getAuth, GoogleAuthProvider, signInAnonymously, signInWithPopup } from 
 import { useNavigate } from 'react-router-dom';
 import { firebaseConfig } from '../../Firebase';
 import { useEffect } from 'react';
+import Auth from '../../Auth';
 
 export default function Login() {
 
@@ -17,18 +18,13 @@ export default function Login() {
         signInWithPopup(auth, provider)
             .then((res) => {
                 localStorage.setItem('uid', res.user.uid);
+                Auth.authnticate();
                 navigate('/dashboard');
             })
             .catch((err) => {
                 console.error(err);
             })
     }
-
-    useEffect(() => {
-        if(localStorage.getItem('uid')){
-            navigate("/dashboard");
-        }
-    }, [])
 
     return (
         <>
