@@ -1,16 +1,11 @@
 import './App.css';
-import { signInWithGoogle } from './Firebase';
-
+import Login from './view/Login/Login';
+import 'bootstrap/dist/css/bootstrap.css';
 function App() {
 
-  const handleClick = () =>{
-    signInWithGoogle();
-  }
   return (
     <div className="App">
-      <button onClick={handleClick}>
-        click here to login
-      </button>
+      <Login />
     </div>
   );
 }
