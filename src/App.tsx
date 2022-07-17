@@ -1,11 +1,14 @@
 import './App.css';
-import Login from './view/Login/Login';
 import 'bootstrap/dist/css/bootstrap.css';
+import { BrowserRouter } from 'react-router-dom';
+import MainRouter from './Routes';
 function App() {
 
   return (
     <div className="App">
-      <Login />
+      <BrowserRouter>
+        <MainRouter />
+      </BrowserRouter>
     </div>
   );
 }

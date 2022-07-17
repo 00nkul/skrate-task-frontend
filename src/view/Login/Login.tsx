@@ -1,15 +1,37 @@
-import { signInWithGoogle } from '../../Firebase';
 import NavbarLoginPage from './Navbar';
 import pic from './../../pic.jpg'
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInAnonymously, signInWithPopup } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+import { firebaseConfig } from '../../Firebase';
+import { useEffect } from 'react';
 
 export default function Login() {
 
-    const handleClick = () => {
-        signInWithGoogle();
+    const navigate = useNavigate();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const handleClick = async () => {
+        signInWithPopup(auth, provider)
+            .then((res) => {
+                localStorage.setItem('uid', res.user.uid);
+                navigate('/dashboard');
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     }
+
+    useEffect(() => {
+        if(localStorage.getItem('uid')){
+            navigate("/dashboard");
+        }
+    }, [])
+
     return (
         <>
-
             <NavbarLoginPage />
             <div
                 className="d-flex align-items-center "
@@ -17,7 +39,6 @@ export default function Login() {
             >
                 <div className="container-fluid">
                     <div className="row justify-content-center">
-
                         <div className="col-12 col-md-6 col-lg-6 col-xl-6  px-xl-6 my-5 ">
                             <p className="fw-bold fs-larger fs-3 mb-5">
                                 Welcome Back to <br />
